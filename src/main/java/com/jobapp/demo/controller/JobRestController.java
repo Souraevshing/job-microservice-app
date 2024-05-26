@@ -15,7 +15,6 @@ import java.util.Optional;
 public class JobRestController {
 
     private JobService jobService;
-
 /**
  * initialize database with default jobs
  * */
@@ -31,7 +30,7 @@ public class JobRestController {
 
     @GetMapping("{id}")
     public Optional<Optional<JobPost>> getJobById(@PathVariable int id) throws Exception {
-        return jobService.getJobById(id);
+        return Optional.ofNullable(jobService.getJobById(id));
     }
 
     @GetMapping("search/{keyword}")
@@ -42,17 +41,17 @@ public class JobRestController {
     @PostMapping()
     public Optional<Optional<JobPost>> createJob(@RequestBody JobPost jobPost) throws Exception {
         jobService.addJob(jobPost);
-        return jobService.getJobById(jobPost.getPostId());
+        return Optional.ofNullable(jobService.getJobById(jobPost.getPostId()));
     }
 
     @PutMapping
     public Optional<Optional<JobPost>> updateJob(@RequestBody JobPost jobPost) throws Exception {
         jobService.updateJob(jobPost);
-        return jobService.getJobById(jobPost.getPostId());
+        return Optional.ofNullable(jobService.getJobById(jobPost.getPostId()));
     }
 
     @DeleteMapping("{id}")
-    public String deleteJob(@PathVariable int id) {
+    public String deleteJob(@PathVariable int id) throws Exception {
         jobService.deleteJob(id);
         return "Deleted";
     }

@@ -47,7 +47,7 @@ public class JobController {
 
     //handle submit form
     @PostMapping("handleForm")
-    public String handleForm(JobPost jobPost) {
+    public String handleForm(JobPost jobPost) throws Exception {
         jobService.addJob(jobPost);
         return "success";
     }
